@@ -1,13 +1,26 @@
 const express = require('express');
-const app = express();
+const http = require('http');
 const path = require('path');
-const publicPath = path.join(__dirname, '../public'); 
+const socketIO = require('socket.io');
+
+const publicPath = path.join(__dirname, '../public');
+const port = 3000 || process.env.PORT;
+var app = express(); 
+
+// setting up server for socket.io
+var server = http.createServer(app); // call to http to create a server is the same as .liste()
+var io = socketIO(server);
+
 
 app.use(express.static(publicPath));
 
-var port = 3000 || process.env.PORT;
+io.on('connection', (socket) => {
+    console.log('New user connected.');
 
-
+    socket.on('disconnect', () => {
+        console.log('Disconnected from server.');
+    });
+});
 
 
 
@@ -15,6 +28,6 @@ var port = 3000 || process.env.PORT;
 
 
 //===========================
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Server up on port: ${port}`);
 });
