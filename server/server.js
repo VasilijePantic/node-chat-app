@@ -18,18 +18,40 @@ io.on('connection', (socket) => {// io.on - special event for connectio
     console.log('New user connected.');
 
     // socket.emit - EMITS AN EVENT TO A SIGNLE CONNECTION
-    
+
 
     // custom createMessage event listener
+
+    socket.emit('newMessage', {
+        from: 'Admin',
+        text: 'welcome to the chat app',
+        createdAt: new Date().getTime()
+    });
+
+    socket.broadcast.emit('newMessage', {
+        from: 'Admin',
+        text: 'new user joined',
+        createdAt: new Date().getTime()
+    });
+
+
     socket.on('createMessage', (message) => {
         console.log('Create message: ', message);
-
-        // io.emit - EMITS AN EVENT TO EVERY CONNECTION
         io.emit('newMessage', {
             from: message.from,
             text: message.text,
             createdAt: new Date().getTime()
         });
+
+
+    // // broadcast - will emit to everybody except this socket
+    // socket.broadcast.emit('newMessage', {
+    //     from: message.from,
+    //     text: message.text,
+    //     createdAt: new Date().getTime()
+    // });
+
+
     });
 
 
