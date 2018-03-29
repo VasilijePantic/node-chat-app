@@ -14,10 +14,25 @@ var io = socketIO(server);
 
 app.use(express.static(publicPath));
 
-io.on('connection', (socket) => {
+io.on('connection', (socket) => {// io.on - special event for connectio
     console.log('New user connected.');
 
-    socket.on('disconnect', () => {
+
+    // custom newMessage event
+    socket.emit('newMessage', {
+        from: 'ciganj',
+        text: 'message from server',
+        createdAt: 187
+    });
+
+    // custom createMessage event listener
+    socket.on('createMessage', (message) => {
+        console.log('Create message: ', message);
+    });
+
+
+    // ===============
+    socket.on('disconnect', () => {// .on uses an already existing event such as disconnect
         console.log('Disconnected from server.');
     });
 });
