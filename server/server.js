@@ -3,6 +3,7 @@ const http = require('http');
 const path = require('path');
 const socketIO = require('socket.io');
 
+const {generateMessage} = require('./utils/message');
 const publicPath = path.join(__dirname, '../public');
 const port = 3000 || process.env.PORT;
 var app = express(); 
@@ -20,36 +21,17 @@ io.on('connection', (socket) => {// io.on - special event for connectio
     // socket.emit - EMITS AN EVENT TO A SIGNLE CONNECTION
 
 
-    // custom createMessage event listener
+    socket.emit('newMessage', generateMessage('Admin', 'Welcome to chat app'));
 
-    socket.emit('newMessage', {
-        from: 'Admin',
-        text: 'welcome to the chat app',
-        createdAt: new Date().getTime()
-    });
-
-    socket.broadcast.emit('newMessage', {
-        from: 'Admin',
-        text: 'new user joined',
-        createdAt: new Date().getTime()
-    });
+    socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
 
 
     socket.on('createMessage', (message) => {
         console.log('Create message: ', message);
-        io.emit('newMessage', {
-            from: message.from,
-            text: message.text,
-            createdAt: new Date().getTime()
-        });
+        io.emit('newMessage', generateMessage(message.from, message.text));
 
 
     // // broadcast - will emit to everybody except this socket
-    // socket.broadcast.emit('newMessage', {
-    //     from: message.from,
-    //     text: message.text,
-    //     createdAt: new Date().getTime()
-    // });
 
 
     });
