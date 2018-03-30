@@ -26,10 +26,10 @@ io.on('connection', (socket) => {// io.on - special event for connectio
     socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
 
 
-    socket.on('createMessage', (message) => {
+    socket.on('createMessage', (message, callback) => {// callback arg is for event acknowledgement 
         console.log('Create message: ', message);
         io.emit('newMessage', generateMessage(message.from, message.text));
-
+        callback('This is from the server');// we send data by providing 1 arg to callback
 
     // // broadcast - will emit to everybody except this socket
 
