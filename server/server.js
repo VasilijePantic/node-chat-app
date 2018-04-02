@@ -30,7 +30,7 @@ io.on('connection', (socket) => {// io.on - special event for connectio
         console.log('Create message: ', message);
         // newMessage event
         io.emit('newMessage', generateMessage(message.from, message.text));
-        callback('This is from the server');// we send data by providing 1 arg to callback
+        callback();// we send data by providing 1 arg to callback
     });
 
 
