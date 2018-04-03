@@ -12,9 +12,10 @@ socket.on('disconnect', function () {
 
 // MESSAGES - custom newMessage event listener
 socket.on('newMessage', function (message) {
-    console.log('New message: ', message);
+    var formattedTime = moment(message.createdAt).format('h:mm a');
+
     var li = $('<li></li>');// we are taking list item from index.html with jQuery
-    li.text(`${message.from}: ${message.text}`);// adding -from and -message.text values to text propery in list
+    li.text(`${message.from} ${formattedTime}: ${message.text}`);// adding -from and -message.text values to text propery in list
 
     $('#messages').append(li);// appending values from list to OL
 });
@@ -22,10 +23,12 @@ socket.on('newMessage', function (message) {
 
 //generateLocationMessage emmit
 socket.on('newLocationMessage', function (message) {
+    var formattedTime = moment(message.createdAt).format('h:mm a');
+
     var li = $('<li></li>');
     var a = $('<a target="_blank">My current Location</a>');
 
-    li.text(`${message.from}: `);
+    li.text(`${message.from} ${formattedTime}: `);
     a.attr('href', message.url);
     li.append(a);
     $('#messages').append(li);
