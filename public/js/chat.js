@@ -1,6 +1,7 @@
 var socket = io();
 
 
+// AUTOSCROLL BOT
 function scrollToBottom () {
     //selectors
     var messages = $('#messages');
@@ -21,11 +22,35 @@ function scrollToBottom () {
 
 // CONNECT AND DISCONNECT
 socket.on('connect', function () {
-    console.log('Connected to server.');
+    // room joining
+    var params = $.deparam(window.location.search);// getting params from the window
+
+    socket.emit('join', params, function (err) {
+        if (err) {
+            alert(err);
+            window.location.href = '/';//get the user to root page by setting href to '/'
+        } else {
+            console.log('No error');
+        }
+    });
 });
 socket.on('disconnect', function () {
     console.log('Disconnected from server.');
 });
+
+
+// UPDATE USERS LIST
+socket.on('updateUserList', function (users) {
+    var ol = $('<ol></ol>');//creating an OL
+
+    users.forEach(function (user) {// going through users arr
+        ol.append($('<li></li>').text(user));// appending the element
+    });
+
+    $('#users').html(ol);
+});
+
+
 
 
 // newMessage - custom newMessage event listener
