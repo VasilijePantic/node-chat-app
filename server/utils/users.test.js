@@ -57,33 +57,33 @@ describe('Users', () => {
 
 
 
-    // //4th test case - for - removeUser
-    // it('should remove a user', () => {
-    //     var userId = '1';
-    //     var user = users.removeUser(userId);
+    //4th test case - for - removeUser
+    it('should remove a user', () => {
+        var userId = '1';
+        var user = users.removeUser(userId);
 
-    //     expect(user.id).toBe(userId); //TypeError: Cannot read property 'id' of undefined
-    //     expect(users.users.length).toBe(2);
-    // });
+        expect(user.id).toBe(userId); //TypeError: Cannot read property 'id' of undefined
+        expect(users.users.length).toBe(2);
+    });
 
-    // // 5th test case - for - removeUser
-    // it('should not remove user', () => {
-    //     var userId = '99';
-    //     var users = users.removeUser(userId);
+    // 5th test case - for - removeUser
+    it('should not remove user', () => {
+        var userId = '99';
+        var users = users.removeUser(userId);
 
-    //     expect(user).toBeFalsy();
-    //     expect(users.users.length).toBe(3);
-    // });
+        expect(user).toBeFalsy();
+        expect(users.users.length).toBe(3);
+    });
 
 
 
-    // // 6th test case - for - getUser
-    // it('should find user', () => {
-    //     var userId = '2';
-    //     var user = users.getUser(userId);
+    // 6th test case - for - getUser
+    it('should find user', () => {
+        var userId = '2';
+        var user = users.getUser(userId);
 
-    //     expect(user.id).toBe(userId);// TypeError: Cannot read property 'id' of undefined
-    // });
+        expect(user.id).toBe(userId);// TypeError: Cannot read property 'id' of undefined
+    });
     
     // 7th test case - for - getUser
     it('should not find user', () => {
