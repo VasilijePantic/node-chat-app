@@ -49,9 +49,12 @@ io.on('connection', (socket) => {// io.on - special event for connectio
 
     // createMessage event
     socket.on('createMessage', (message, callback) => {// callback arg is for event acknowledgement 
-        console.log('Create message: ', message);
-        // newMessage event
-        io.emit('newMessage', generateMessage(message.from, message.text));
+        var user = users.getUser(socket.id);
+
+        if(user && isRealString(message.text)) {// if there is a user and if if text passed is valid
+            io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));// emit message            
+        }
+
         callback();// we send data by providing 1 arg to callback
     });
 
@@ -59,7 +62,12 @@ io.on('connection', (socket) => {// io.on - special event for connectio
     
     // location
     socket.on('createLocationMessage', (coords) => {
-        io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
+        var user = users.getUser(socket.id);
+
+        if(user) {
+            io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude));
+        }
+        
     });
 
 

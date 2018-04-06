@@ -9,15 +9,15 @@ describe('Users', () => {
     beforeEach(() => {
         users = new Users();
         users.users = [{
-            id: 1,
+            id: '1',
             name: 'Mike',
             room: 'Node Course'
         }, {
-            id: 2,
+            id: '2',
             name: 'Jen',
             room: 'React Course'
         }, {
-            id: 3,
+            id: '3',
             name: 'Julie',
             room: 'Node Course'
         }]
@@ -69,7 +69,7 @@ describe('Users', () => {
     // 5th test case - for - removeUser
     it('should not remove user', () => {
         var userId = '99';
-        var users = users.removeUser(userId);
+        var user = users.removeUser(userId);
 
         expect(user).toBeFalsy();
         expect(users.users.length).toBe(3);

@@ -17,10 +17,10 @@ class Users {
     //2nd method
     removeUser(id) {
         var user = this.getUser(id);
-        if(user) {
-            this.users === this.users.filter((user) => user.id !== id);
-        }
 
+        if(user) {
+            this.users = this.users.filter((user) => user.id !== id);
+        }
         return user;
     }
 
